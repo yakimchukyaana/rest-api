@@ -4,8 +4,11 @@ import in.reqres.models.lombok.LoginBodyLombokModel;
 import in.reqres.models.lombok.LoginResponseLombokModel;
 import in.reqres.models.pojo.LoginBodyPojoModel;
 import in.reqres.models.pojo.LoginResponsePojoModel;
+import io.qameta.allure.restassured.AllureRestAssured;
 import org.junit.jupiter.api.Test;
 
+import static in.reqres.helpers.CustomAllureListener.withCustomTemplates;
+import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
@@ -81,5 +84,58 @@ public class LoginExtendedTests {
                 .extract().as(LoginResponseLombokModel.class);
 
         assertEquals("QpwL5tke4Pnpja7X4", response.getToken());
+    }
+
+    @Test
+    void successfulLoginWithAllureTest() {
+
+        LoginBodyLombokModel authData = new LoginBodyLombokModel();
+        authData.setEmail("eve.holt@reqres.in");
+        authData.setPassword("cityslicka");
+
+        LoginResponseLombokModel response = step("Make login request", () ->
+                given()
+                        .filter(new AllureRestAssured())
+                        .log().uri()
+                        .log().method()
+                        .log().body()
+                        .contentType(JSON)
+                        .body(authData)
+                        .when()
+                        .post("https://reqres.in/api/login")
+                        .then()
+                        .log().status()
+                        .log().body()
+                        .statusCode(200)
+                        .extract().as(LoginResponseLombokModel.class));
+
+        step("Verify response", () ->
+            assertEquals("QpwL5tke4Pnpja7X4", response.getToken()));
+    }
+    @Test
+    void successfulLoginWithCustomAllureTest() {
+
+        LoginBodyLombokModel authData = new LoginBodyLombokModel();
+        authData.setEmail("eve.holt@reqres.in");
+        authData.setPassword("cityslicka");
+
+        LoginResponseLombokModel response = step("Make login request", () ->
+                given()
+                        .filter(withCustomTemplates())
+                        .log().uri()
+                        .log().method()
+                        .log().body()
+                        .contentType(JSON)
+                        .body(authData)
+                        .when()
+                        .post("https://reqres.in/api/login")
+                        .then()
+                        .log().status()
+                        .log().body()
+                        .statusCode(200)
+                        .extract().as(LoginResponseLombokModel.class));
+
+        step("Verify response", () ->
+            assertEquals("QpwL5tke4Pnpja7X4", response.getToken()));
     }
 }

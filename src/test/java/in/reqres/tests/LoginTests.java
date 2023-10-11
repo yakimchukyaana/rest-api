@@ -64,10 +64,6 @@ public class LoginTests {
                 "}"; //BAD PRACTICE
 
         given()
-                .log().uri()
-                .log().method()
-                .log().body()
-                .contentType(JSON)
                 .body(authData)
                 .when()
                 .post("https://reqres.in/api/login")

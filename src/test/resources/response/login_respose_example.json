@@ -1,0 +1,9 @@
+{
+  "userId": "862cbbea-c3e8-4a39-be64-3b053aedeef2",
+  "username": "test123456",
+  "password": "Test123456@",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InRlc3QxMjM0NTYiLCJwYXNzd29yZCI6IlRlc3QxMjM0NTZAIiwiaWF0IjoxNjk3NzI0MDEzfQ.SOJXIW71n8bQUa8ZDYQ6hXMa1GGJnnqk1CIf-jQzrao",
+  "expires": "2023-10-26T14:00:13.000Z",
+  "created_date": "2023-10-08T17:09:26.000Z",
+  "isActive": false
+}
